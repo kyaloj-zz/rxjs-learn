@@ -1,4 +1,4 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 
 // Observable
 let observable = Observable.create((observer:any) => {
@@ -33,12 +33,23 @@ var observer2 = subject.subscribe(
     data => addItem('Observer 2: '+ data)
 )
 
-subject.next('The second thing has been sent')
-subject.next('A third thing has been sent')
+subject.next('The second thing has been sent');
+subject.next('A third thing has been sent');
 
 observer2.unsubscribe();
 
-subject.next('A final thing has been sent')
+subject.next('A final thing has been sent');
+
+// BehaviorSubject
+
+let behaviorSubject = new BehaviorSubject('Behavior Guy');
+
+behaviorSubject.next('...Behavior Guy is about to subscribe...');
+behaviorSubject.subscribe(
+  (data: any) => addItem('B guy' + data),
+  (error: any) => addItem(error),
+  () => addItem('Done')
+);
 
 function addItem(val:any) {
     let node = document.createElement("li");
